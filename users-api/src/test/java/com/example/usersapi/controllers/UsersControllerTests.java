@@ -24,9 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +42,7 @@ public class UsersControllerTests {
     private UserRepository mockUserRepository;
 
     private User newUser;
+    private User updatedSecondUser;
 
     @Before
     public void setUp() {
@@ -80,6 +79,15 @@ public class UsersControllerTests {
         );
 
         given(mockUserRepository.save(newUser)).willReturn(newUser);
+
+        updatedSecondUser = new User(
+                "updatedUser@email.com",
+                "updatedFirst",
+                "updatedLast",
+                "updatedPassword"
+        );
+
+        given(mockUserRepository.save(updatedSecondUser)).willReturn(updatedSecondUser);
     }
 
     @Test
@@ -268,5 +276,65 @@ public class UsersControllerTests {
                                 .content(jsonObjectMapper.writeValueAsString(newUser))
                 )
                 .andExpect(jsonPath("$.password", is("newPassword")));
+    }
+
+    @Test
+    public void updateUserById_success_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateUserById_success_returnsUpdatedEmail() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(jsonPath("$.email", is("updatedUser@email.com")));
+    }
+
+    @Test
+    public void updateUserById_success_returnsUpdatedFirstName() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(jsonPath("$.firstName", is("updatedFirst")));
+    }
+
+    @Test
+    public void updateUserById_success_returnsUpdatedLastName() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(jsonPath("$.lastName", is("updatedLast")));
+    }
+
+    @Test
+    public void updateUserById_success_returnsUpdatedPassword() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondUser))
+                )
+                .andExpect(jsonPath("$.password", is("updatedPassword")));
     }
 }
