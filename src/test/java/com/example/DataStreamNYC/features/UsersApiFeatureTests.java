@@ -35,8 +35,6 @@ public class UsersApiFeatureTests {
         userRepository.deleteAll();
     }
 
-    private User secondUser;
-
     @Test
     public void shouldAllowFullCrudForAUser() throws Exception {
 
@@ -47,7 +45,7 @@ public class UsersApiFeatureTests {
                 "password1"
         );
 
-        secondUser = new User(
+        User secondUser = new User(
                 "user2@email.com",
                 "first2",
                 "last2",
