@@ -72,14 +72,14 @@ public class UsersApiFeatureTests {
                 .contentType(JSON)
                 .and().body(userNotYetInDb)
             .when()
-                .post("http://localhost:8080/api/users")
+                .post("http://localhost:8080/users")
             .then()
                 .statusCode(is(200))
                 .and().body(containsString("new_first"));
 
         // Test get all Users
         when()
-                .get("http://localhost:8080/api/users")
+                .get("http://localhost:8080/users")
             .then()
                 .statusCode(is(200))
                 .and().body(containsString("first1"))
@@ -89,7 +89,7 @@ public class UsersApiFeatureTests {
 
         // Test finding one user by ID
         when()
-                .get("http://localhost:8080/api/users/" + secondUser.getId())
+                .get("http://localhost:8080/users/" + secondUser.getId())
             .then()
                 .statusCode(is(200))
                 .and().body(containsString("first2"))
@@ -102,14 +102,14 @@ public class UsersApiFeatureTests {
                 .contentType(JSON)
                 .and().body(secondUser)
             .when()
-                .patch("http://localhost:8080/api/users/" + secondUser.getId())
+                .patch("http://localhost:8080/users/" + secondUser.getId())
             .then()
                 .statusCode(is(200))
                 .and().body(containsString("changed_firstName"));
 
         // Test deleting a user
         when()
-                .delete("http://localhost:8080/api/users/" + secondUser.getId())
+                .delete("http://localhost:8080/users/" + secondUser.getId())
             .then()
                 .statusCode(is(200));
     }
