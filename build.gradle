@@ -43,9 +43,14 @@ task waitForUsersAPI(type: Exec) {
 	commandLine './wait-for-api.sh','http://localhost:8080/users', 'Users API'
 }
 
+task waitForSuggestionsAPI(type: Exec) {
+	commandLine './wait-for-api.sh','http://localhost:8080/suggestions', 'Suggestions API'
+}
+
 test {
 	dependsOn cleanTest
 	dependsOn waitForUsersAPI
+	dependsOn waitForSuggestionsAPI
 
 	testLogging {
 		exceptionFormat "full"
@@ -59,10 +64,17 @@ task runUsersAPITests(type: Exec) {
 	commandLine './gradlew', 'test'
 }
 
+task runSuggestionsAPITests(type: Exec) {
+	workingDir './suggestions-api'
+	commandLine './gradlew', 'test'
+}
+
 task allTests(type: Test) {
 	dependsOn cleanTest
 	dependsOn waitForUsersAPI
 	dependsOn runUsersAPITests
+	dependsOn waitForSuggestionsAPI
+	dependsOn runSuggestionsAPITests
 
 	testLogging {
 		exceptionFormat "full"
