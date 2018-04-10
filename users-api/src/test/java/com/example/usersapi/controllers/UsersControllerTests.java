@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
@@ -52,6 +53,7 @@ public class UsersControllerTests {
 
         given(mockUserRepository.findAll()).willReturn(mockUsers);
         given(mockUserRepository.findOne(1L)).willReturn(firstUser);
+        given(mockUserRepository.findOne(4L)).willReturn(null);
     }
 
     @Test
@@ -140,5 +142,21 @@ public class UsersControllerTests {
         this.mockMvc
                 .perform(get("/1"))
                 .andExpect(jsonPath("$.password", is("password1")));
+    }
+
+    @Test
+    public void findUserById_failure_userNotFoundReturns404() throws Exception {
+
+        this.mockMvc
+                .perform(get("/4"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findUserById_failure_userNotFoundReturnsNotFoundErrorMessage() throws Exception {
+
+        this.mockMvc
+                .perform(get("/4"))
+                .andExpect(status().reason(containsString("User with ID of 4 was not found!")));
     }
 }
