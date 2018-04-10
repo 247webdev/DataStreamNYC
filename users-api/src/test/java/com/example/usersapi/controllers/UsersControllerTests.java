@@ -51,6 +51,7 @@ public class UsersControllerTests {
                 Stream.of(firstUser, secondUser).collect(Collectors.toList());
 
         given(mockUserRepository.findAll()).willReturn(mockUsers);
+        given(mockUserRepository.findOne(1L)).willReturn(firstUser);
     }
 
     @Test
@@ -99,5 +100,45 @@ public class UsersControllerTests {
         this.mockMvc
                 .perform(get("/"))
                 .andExpect(jsonPath("$[0].password", is("password1")));
+    }
+
+    @Test
+    public void findUserById_success_returnsStatusOK() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findUserById_success_returnUserName() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.email", is("user1@email.com")));
+    }
+
+    @Test
+    public void findUserById_success_returnFirstName() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.firstName", is("first1")));
+    }
+
+    @Test
+    public void findUserById_success_returnLastName() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.lastName", is("last1")));
+    }
+
+    @Test
+    public void findUserById_success_returnPassword() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.password", is("password1")));
     }
 }
