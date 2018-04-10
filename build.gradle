@@ -18,26 +18,6 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'docker-compose'
 
-dockerCompose {
-	useComposeFiles = ['docker-compose.yml']
-}
-dockerCompose.isRequiredBy(test)
-
-task waitForUsersAPI(type: Exec) {
-	commandLine './wait-for-api.sh','http://localhost:8080/users', 'Users API'
-}
-
-test {
-	dependsOn cleanTest
-	dependsOn waitForUsersAPI
-
-	testLogging {
-		exceptionFormat "full"
-		events "skipped", "passed", "failed"
-		displayGranularity 2
-	}
-}
-
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -58,3 +38,41 @@ dependencies {
 	runtime 'org.postgresql:postgresql'
 	runtime 'org.springframework.boot:spring-boot-devtools'
 }
+
+task waitForUsersAPI(type: Exec) {
+	commandLine './wait-for-api.sh','http://localhost:8080/users', 'Users API'
+}
+
+test {
+	dependsOn cleanTest
+	dependsOn waitForUsersAPI
+
+	testLogging {
+		exceptionFormat "full"
+		events "skipped", "passed", "failed"
+		displayGranularity 2
+	}
+}
+
+task runUsersAPITests(type: Exec) {
+	workingDir './users-api'
+	commandLine './gradlew', 'test'
+}
+
+task allTests(type: Test) {
+	dependsOn cleanTest
+	dependsOn waitForUsersAPI
+	dependsOn runUsersAPITests
+
+	testLogging {
+		exceptionFormat "full"
+		events "skipped", "passed", "failed"
+		displayGranularity 2
+	}
+}
+
+dockerCompose {
+	useComposeFiles = ['docker-compose.yml']
+}
+dockerCompose.isRequiredBy(test)
+dockerCompose.isRequiredBy(allTests)
