@@ -47,3 +47,17 @@ services:
         - POSTGRES_PASSWORD=password
         - POSTGRES_USER=postgres
         - POSTGRES_DB=pgdev
+  suggestions-api:
+      image: anapsix/alpine-java:8_jdk_unlimited
+      ports:
+        - '8082:8082'
+      working_dir: /suggestions-api
+      volumes:
+        - ./suggestions-api:/suggestions-api
+      depends_on:
+        - eureka
+        - users-api
+      command: './gradlew bootRun'
+      environment:
+        - GRADLE_USER_HOME=cache
+        - SPRING_PROFILES_ACTIVE=dev
