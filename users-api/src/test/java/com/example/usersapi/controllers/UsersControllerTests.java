@@ -18,6 +18,9 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -158,5 +161,21 @@ public class UsersControllerTests {
         this.mockMvc
                 .perform(get("/4"))
                 .andExpect(status().reason(containsString("User with ID of 4 was not found!")));
+    }
+
+    @Test
+    public void deleteUserById_success_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(delete("/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteUserById_success_deletesViaRepository() throws Exception {
+
+        this.mockMvc.perform(delete("/1"));
+
+        verify(mockUserRepository, times(1)).delete(1L);
     }
 }
