@@ -23,6 +23,14 @@ dockerCompose {
 }
 dockerCompose.isRequiredBy(test)
 
+task waitForUsersAPI(type: Exec) {
+	commandLine './wait-for-api.sh','http://localhost:8080/users', 'Users API'
+}
+
+test {
+	dependsOn waitForUsersAPI
+}
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
