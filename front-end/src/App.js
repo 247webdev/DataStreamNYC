@@ -4,13 +4,14 @@ import axios from 'axios';
 import './App.css';
 
 import HomePage from './components/HomePage';
+import AdminView from './components/AdminView';
+import UpdateUserForm from './components/UpdateUserForm';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      users: [],
       currentUser: {
         id: null,
         firstName: '',
@@ -24,6 +25,8 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/admin" component={AdminView} />
+          <Route path="/update/:userId/:index" component={UpdateUserForm} />
         </Switch>
       </Router>
     );
