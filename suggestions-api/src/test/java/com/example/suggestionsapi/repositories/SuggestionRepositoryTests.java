@@ -1,13 +1,18 @@
 package com.example.suggestionsapi.repositories;
 
 import com.example.suggestionsapi.models.Suggestion;
+import com.google.common.collect.Iterables;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -37,5 +42,39 @@ public class SuggestionRepositoryTests {
         entityManager.persist(firstSuggestion);
         entityManager.persist(secondSuggestion);
         entityManager.flush();
+    }
+
+    @Test
+    public void findAll_returnsAllSuggestions() {
+        Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
+
+        assertThat(Iterables.size(suggestionsFromDb), is(2));
+    }
+
+    @Test
+    public void findAll_returnsSuggestionName() {
+        Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
+
+        String secondSuggestionsSuggestionName = Iterables.get(suggestionsFromDb, 1).getTitle();
+
+        assertThat(secondSuggestionsSuggestionName, is("title2"));
+    }
+
+    @Test
+    public void findAll_returnsFirstName() {
+        Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
+
+        String secondSuggestionsFirstName = Iterables.get(suggestionsFromDb, 1).getContent();
+
+        assertThat(secondSuggestionsFirstName, is("contentSuggestion2"));
+    }
+
+    @Test
+    public void findAll_returnsLastName() {
+        Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
+
+        Long secondSuggestionsLastName = Iterables.get(suggestionsFromDb, 1).getUserId();
+
+        assertThat(secondSuggestionsLastName, is(5));
     }
 }
