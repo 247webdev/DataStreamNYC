@@ -35,11 +35,42 @@ public class SuggestionsControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private SuggestionRepository mockSuggestionRepository;
+
+    @Before
+    public void setUp() {
+        Suggestion firstSuggestion = new Suggestion(
+                "title1",
+                "contentSuggestion1",
+                2L
+        );
+
+        Suggestion secondSuggestion = new Suggestion(
+                "title2",
+                "contentSuggestion2",
+                1L
+        );
+
+        Iterable<Suggestion> mockSuggestions =
+                Stream.of(firstSuggestion, secondSuggestion).collect(Collectors.toList());
+
+        given(mockSuggestionRepository.findAll()).willReturn(mockSuggestions);
+    }
+
     @Test
     public void findAllSuggestions_success_returnsStatusOK() throws Exception {
 
         this.mockMvc
                 .perform(get("/"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findAllSuggestions_success_returnAllSuggestionsAsJSON() throws Exception {
+
+        this.mockMvc
+                .perform(get("/"))
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 }
