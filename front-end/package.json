@@ -12,5 +12,26 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "description": "React User-Interface built with Java microservices back-end to act as GUI built for the NYC Online Data Portal API.",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slimdoja/DataStreamNYC.git"
+  },
+  "keywords": [
+    "react",
+    "api",
+    "user-interface",
+    "data",
+    "stream",
+    "nyc"
+  ],
+  "author": "Christian Haberman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slimdoja/DataStreamNYC/issues"
+  },
+  "homepage": "https://github.com/slimdoja/DataStreamNYC#readme"
 }
