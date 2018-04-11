@@ -24,7 +24,7 @@ const HomePage = (props) => {
             <Link to="/admin" id="admin-view-link">Admin View</Link>
           </div>
         </div>
-        <h3>Welcome!</h3>
+        <h2>Welcome!</h2>
       </div>
       <div className="skyline"></div>
     </div>
