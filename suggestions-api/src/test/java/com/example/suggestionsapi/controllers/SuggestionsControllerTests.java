@@ -73,4 +73,28 @@ public class SuggestionsControllerTests {
                 .perform(get("/"))
                 .andExpect(jsonPath("$", hasSize(2)));
     }
+
+    @Test
+    public void findAllSuggestions_success_returnTitleForEachSuggestion() throws Exception {
+
+        this.mockMvc
+                .perform(get("/"))
+                .andExpect(jsonPath("$[0].title", is("title1")));
+    }
+
+    @Test
+    public void findAllSuggestions_success_returnContentForEachSuggestion() throws Exception {
+
+        this.mockMvc
+                .perform(get("/"))
+                .andExpect(jsonPath("$[0].content", is("contentSuggestion1")));
+    }
+
+    @Test
+    public void findAllSuggestions_success_returnUserIdForEachSuggestion() throws Exception {
+
+        this.mockMvc
+                .perform(get("/"))
+                .andExpect(jsonPath("$[0].userId", is(2)));
+    }
 }
