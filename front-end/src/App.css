@@ -1,18 +1,27 @@
+body {
+  background: radial-gradient(#162a29, #233428);
+}
+
 .home {
   text-align: center;
-  width: 700px;
-  margin: 10px auto;
-  padding: 15px 0;
-  border: 1px solid black;
+  width: 100%;
+}
+
+.hometop {
+  border-bottom: 1px solid #000;
+}
+
+.homemid {
+  width: 100%;
+  padding: 10px 0;
   background-color: whitesmoke;
 }
 
 .NYClogo {
-  width: 100%;
-  display: block;
+  width: 60%;
+  display: inline-block;
   padding-bottom: 15px;
   margin-bottom: 15px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .NYClogo h1 {
@@ -46,4 +55,18 @@
 
 .NYClogo .logoright p {
   margin: 0;
+}
+
+.homenav {
+  width: 40%;
+  margin-top: 15px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.skyline {
+  margin: 0 auto;
+  width: 640px;
+  height: 480px;
+  background: url("./skyline.jpg");
 }
