@@ -52,7 +52,7 @@ public class SuggestionRepositoryTests {
     }
 
     @Test
-    public void findAll_returnsSuggestionName() {
+    public void findAll_returnsTitle() {
         Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
 
         String secondSuggestionsSuggestionName = Iterables.get(suggestionsFromDb, 1).getTitle();
@@ -61,7 +61,7 @@ public class SuggestionRepositoryTests {
     }
 
     @Test
-    public void findAll_returnsFirstName() {
+    public void findAll_returnsContent() {
         Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
 
         String secondSuggestionsFirstName = Iterables.get(suggestionsFromDb, 1).getContent();
@@ -70,11 +70,11 @@ public class SuggestionRepositoryTests {
     }
 
     @Test
-    public void findAll_returnsLastName() {
+    public void findAll_returnsUserId() {
         Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
 
         Long secondSuggestionsLastName = Iterables.get(suggestionsFromDb, 1).getUserId();
 
-        assertThat(secondSuggestionsLastName, is(5));
+        assertThat(secondSuggestionsLastName, is(5L));
     }
 }
