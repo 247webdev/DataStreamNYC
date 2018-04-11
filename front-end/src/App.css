@@ -1,5 +1,5 @@
 body {
-  background: radial-gradient(#162a29, #233428);
+  background: radial-gradient(steelblue, slategrey);
 }
 
 .home {
@@ -65,7 +65,7 @@ body {
 }
 
 .skyline {
-  margin: 0 auto;
+  margin: 10px auto;
   width: 640px;
   height: 480px;
   background: url("./skyline.jpg");
