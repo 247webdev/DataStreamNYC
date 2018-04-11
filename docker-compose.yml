@@ -62,3 +62,16 @@ services:
       environment:
         - GRADLE_USER_HOME=cache
         - SPRING_PROFILES_ACTIVE=dev
+  front-end:
+      image: node
+      ports:
+        - "3000:3000"
+      working_dir: /front-end
+      volumes:
+        - ./front-end:/front-end
+      depends_on:
+        - users-api
+        - suggestions-api
+      command: 'npm start'
+      environment:
+        - REACT_APP_USERSAPI=http://localhost:8080
