@@ -57,6 +57,7 @@ public class SuggestionsControllerTests {
 
         given(mockSuggestionRepository.findAll()).willReturn(mockSuggestions);
         given(mockSuggestionRepository.findOne(1L)).willReturn(firstSuggestion);
+        given(mockSuggestionRepository.findOne(4L)).willReturn(null);
     }
 
     @Test
@@ -129,5 +130,21 @@ public class SuggestionsControllerTests {
         this.mockMvc
                 .perform(get("/1"))
                 .andExpect(jsonPath("$.userId", is(2)));
+    }
+
+    @Test
+    public void findSuggestionById_failure_suggestionNotFoundReturns404() throws Exception {
+
+        this.mockMvc
+                .perform(get("/4"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findSuggestionById_failure_suggestionNotFoundReturnsNotFoundErrorMessage() throws Exception {
+
+        this.mockMvc
+                .perform(get("/4"))
+                .andExpect(status().reason(containsString("Suggestion with ID of 4 was not found!")));
     }
 }
