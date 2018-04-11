@@ -35,8 +35,13 @@ public class SuggestionsControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper jsonObjectMapper;
+
     @MockBean
     private SuggestionRepository mockSuggestionRepository;
+
+    private Suggestion newSuggestion;
 
     @Before
     public void setUp() {
@@ -58,6 +63,17 @@ public class SuggestionsControllerTests {
         given(mockSuggestionRepository.findAll()).willReturn(mockSuggestions);
         given(mockSuggestionRepository.findOne(1L)).willReturn(firstSuggestion);
         given(mockSuggestionRepository.findOne(4L)).willReturn(null);
+        doAnswer(invocation -> {
+            throw new EmptyResultDataAccessException("ERROR MESSAGE FROM MOCK!!!", 1234);
+        }).when(mockSuggestionRepository).delete(4L);
+
+        newSuggestion = new Suggestion(
+                "newTitle",
+                "newContentSuggestion",
+                3L
+        );
+
+        given(mockSuggestionRepository.save(newSuggestion)).willReturn(newSuggestion);
     }
 
     @Test
@@ -163,4 +179,61 @@ public class SuggestionsControllerTests {
 
         verify(mockSuggestionRepository, times(1)).delete(1L);
     }
+
+    @Test
+    public void deleteSuggestionById_failure_suggestionNotFoundReturns404() throws Exception {
+
+        this.mockMvc
+                .perform(delete("/4"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void createSuggestion_success_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newSuggestion))
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createSuggestion_success_returnsTitle() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newSuggestion))
+                )
+                .andExpect(jsonPath("$.title", is("newTitle")));
+    }
+
+    @Test
+    public void createSuggestion_success_returnsContent() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newSuggestion))
+                )
+                .andExpect(jsonPath("$.content", is("newContentSuggestion")));
+    }
+
+    @Test
+    public void createSuggestion_success_returnsUserId() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        post("/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(newSuggestion))
+                )
+                .andExpect(jsonPath("$.userId", is(3)));
+    }
+
 }

@@ -4,6 +4,7 @@ import com.example.suggestionsapi.models.Suggestion;
 import com.example.suggestionsapi.repositories.SuggestionRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +35,15 @@ public class SuggestionsController {
     }
 
     @DeleteMapping("/{suggestionId}")
-    public HttpStatus deleteSuggestionById(@PathVariable Long suggestionId) {
+    public HttpStatus deleteSuggestionById(@PathVariable Long suggestionId) throws EmptyResultDataAccessException {
+
         suggestionRepository.delete(suggestionId);
         return HttpStatus.OK;
+    }
+
+    @PostMapping("/")
+    public Suggestion createNewSuggestion(@RequestBody Suggestion newSuggestion) {
+        return suggestionRepository.save(newSuggestion);
     }
 
     // EXCEPTION HANDLERS
@@ -47,5 +54,13 @@ public class SuggestionsController {
             HttpServletResponse response) throws IOException {
 
         response.sendError(HttpStatus.NOT_FOUND.value(), exception.getMessage());
+    }
+
+    @ExceptionHandler
+    void handleDeleteNotFoundException(
+            EmptyResultDataAccessException exception,
+            HttpServletResponse response) throws IOException {
+
+        response.sendError(HttpStatus.NOT_FOUND.value());
     }
 }
