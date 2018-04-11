@@ -5,10 +5,7 @@ import com.example.suggestionsapi.repositories.SuggestionRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,6 +31,12 @@ public class SuggestionsController {
         }
 
         return foundSuggestion;
+    }
+
+    @DeleteMapping("/{suggestionId}")
+    public HttpStatus deleteSuggestionById(@PathVariable Long suggestionId) {
+        suggestionRepository.delete(suggestionId);
+        return HttpStatus.OK;
     }
 
     // EXCEPTION HANDLERS

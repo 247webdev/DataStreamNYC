@@ -147,4 +147,20 @@ public class SuggestionsControllerTests {
                 .perform(get("/4"))
                 .andExpect(status().reason(containsString("Suggestion with ID of 4 was not found!")));
     }
+
+    @Test
+    public void deleteSuggestionById_success_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(delete("/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteSuggestionById_success_deletesViaRepository() throws Exception {
+
+        this.mockMvc.perform(delete("/1"));
+
+        verify(mockSuggestionRepository, times(1)).delete(1L);
+    }
 }
