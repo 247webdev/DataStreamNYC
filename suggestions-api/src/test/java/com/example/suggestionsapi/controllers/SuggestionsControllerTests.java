@@ -56,6 +56,7 @@ public class SuggestionsControllerTests {
                 Stream.of(firstSuggestion, secondSuggestion).collect(Collectors.toList());
 
         given(mockSuggestionRepository.findAll()).willReturn(mockSuggestions);
+        given(mockSuggestionRepository.findOne(1L)).willReturn(firstSuggestion);
     }
 
     @Test
@@ -96,5 +97,37 @@ public class SuggestionsControllerTests {
         this.mockMvc
                 .perform(get("/"))
                 .andExpect(jsonPath("$[0].userId", is(2)));
+    }
+
+    @Test
+    public void findSuggestionById_success_returnsStatusOK() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findSuggestionById_success_returnTitle() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.title", is("title1")));
+    }
+
+    @Test
+    public void findSuggestionById_success_returnContent() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.content", is("contentSuggestion1")));
+    }
+
+    @Test
+    public void findSuggestionById_success_returnUserId() throws Exception {
+
+        this.mockMvc
+                .perform(get("/1"))
+                .andExpect(jsonPath("$.userId", is(2)));
     }
 }
