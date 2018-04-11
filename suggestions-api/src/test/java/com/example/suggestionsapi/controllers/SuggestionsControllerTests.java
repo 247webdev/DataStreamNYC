@@ -293,4 +293,27 @@ public class SuggestionsControllerTests {
                 .andExpect(jsonPath("$.userId", is(1)));
     }
 
+    @Test
+    public void updateSuggestionById_failure_suggestionNotFoundReturns404() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/4")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
+                )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateSuggestionById_failure_suggestionNotFoundReturnsNotFoundErrorMessage() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/4")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
+                )
+                .andExpect(status().reason(containsString("Suggestion with ID of 4 was not found!")));
+    }
 }

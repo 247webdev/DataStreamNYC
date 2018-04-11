@@ -47,8 +47,12 @@ public class SuggestionsController {
     }
 
     @PatchMapping("/{suggestionId}")
-    public Suggestion updateSuggestionById(@PathVariable Long suggestionId, @RequestBody Suggestion suggestionRequest) {
+    public Suggestion updateSuggestionById(@PathVariable Long suggestionId, @RequestBody Suggestion suggestionRequest) throws NotFoundException {
         Suggestion suggestionFromDb = suggestionRepository.findOne(suggestionId);
+
+        if (suggestionFromDb == null) {
+            throw new NotFoundException("Suggestion with ID of " + suggestionId + " was not found!");
+        }
 
         suggestionFromDb.setTitle(suggestionRequest.getTitle());
         suggestionFromDb.setContent(suggestionRequest.getContent());
