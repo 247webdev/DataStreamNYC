@@ -42,6 +42,7 @@ public class SuggestionsControllerTests {
     private SuggestionRepository mockSuggestionRepository;
 
     private Suggestion newSuggestion;
+    private Suggestion updatedSecondSuggestion;
 
     @Before
     public void setUp() {
@@ -74,6 +75,14 @@ public class SuggestionsControllerTests {
         );
 
         given(mockSuggestionRepository.save(newSuggestion)).willReturn(newSuggestion);
+
+        updatedSecondSuggestion = new Suggestion(
+                "updatedTitle",
+                "updatedContentSuggestion",
+                1L
+        );
+
+        given(mockSuggestionRepository.save(updatedSecondSuggestion)).willReturn(updatedSecondSuggestion);
     }
 
     @Test
@@ -234,6 +243,54 @@ public class SuggestionsControllerTests {
                                 .content(jsonObjectMapper.writeValueAsString(newSuggestion))
                 )
                 .andExpect(jsonPath("$.userId", is(3)));
+    }
+
+    @Test
+    public void updateSuggestionById_success_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateSuggestionById_success_returnsUpdatedTitle() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
+                )
+                .andExpect(jsonPath("$.title", is("updatedTitle")));
+    }
+
+    @Test
+    public void updateSuggestionById_success_returnsUpdatedContent() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
+                )
+                .andExpect(jsonPath("$.content", is("updatedContentSuggestion")));
+    }
+
+    @Test
+    public void updateSuggestionById_success_returnsUpdatedUserId() throws Exception {
+
+        this.mockMvc
+                .perform(
+                        patch("/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
+                )
+                .andExpect(jsonPath("$.userId", is(1)));
     }
 
 }

@@ -46,6 +46,17 @@ public class SuggestionsController {
         return suggestionRepository.save(newSuggestion);
     }
 
+    @PatchMapping("/{suggestionId}")
+    public Suggestion updateSuggestionById(@PathVariable Long suggestionId, @RequestBody Suggestion suggestionRequest) {
+        Suggestion suggestionFromDb = suggestionRepository.findOne(suggestionId);
+
+        suggestionFromDb.setTitle(suggestionRequest.getTitle());
+        suggestionFromDb.setContent(suggestionRequest.getContent());
+        suggestionFromDb.setUserId(suggestionRequest.getUserId());
+
+        return suggestionRepository.save(suggestionFromDb);
+    }
+
     // EXCEPTION HANDLERS
 
     @ExceptionHandler
