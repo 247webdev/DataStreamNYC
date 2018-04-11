@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 
+import HomePage from './components/HomePage';
+
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      users: [],
+      currentUser: {
+        id: null,
+        firstName: '',
+        lastName: ''
+      }
+    };
+  }
+
   render() {
     return (
-      <div className="App">
-        
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+        </Switch>
+      </Router>
     );
   }
 }
