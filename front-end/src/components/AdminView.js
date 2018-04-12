@@ -1,46 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import '../App.css';
 
 import User from './User';
 
-class AdminView extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      users: []
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      const usersResponse = await axios.get(`${process.env.REACT_APP_USERSAPI}/users`);
-      this.setState({
-        users: usersResponse.data,
-        usersResponse
-      });
-    } catch (error) {
-      console.log(error);
-    };
-  };
-
-  deleteUser = async (userId, index) => {
-    try {
-      await axios.delete(`${process.env.REACT_APP_USERSAPI}/users/${userId}`);
-
-      const updatedUsersList = [...this.state.users];
-      updatedUsersList.splice(index, 1);
-
-      this.setState({ users: updatedUsersList });
-
-    } catch (error) {
-      console.log(`Error deleting User with ID: ${userId}`);
-    };
-  };
-
-  render() {
+const AdminView = (props) => {
     return (
       <div id="users-wrapper">
         <div>
@@ -52,10 +16,10 @@ class AdminView extends Component {
         <hr/>
         <div className="list-group">
           {
-            this.state.users.map((user, index) => {
+            props.users.map((user, index) => {
               return (
                 <User
-                  deleteUser={this.deleteUser}
+                  deleteUser={props.deleteUser}
                   user={user}
                   key={index}
                   index={index}
@@ -66,7 +30,6 @@ class AdminView extends Component {
         </div>
       </div>
     );
-  }
 }
 
 export default AdminView;

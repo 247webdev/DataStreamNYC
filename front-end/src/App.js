@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 
 import HomePage from './components/HomePage';
@@ -12,6 +13,7 @@ class App extends Component {
     super();
 
     this.state = {
+      users: [],
       currentUser: {
         id: null,
         firstName: '',
@@ -20,12 +22,43 @@ class App extends Component {
     };
   }
 
+  async componentDidMount() {
+    try {
+      const usersResponse = await axios.get(`${process.env.REACT_APP_USERSAPI}/users`);
+      this.setState({
+        users: usersResponse.data,
+        usersResponse
+      });
+    } catch (error) {
+      console.log(error);
+    };
+  };
+
+  deleteUser = async (userId, index) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_USERSAPI}/users/${userId}`);
+
+      const updatedUsersList = [...this.state.users];
+      updatedUsersList.splice(index, 1);
+
+      this.setState({ users: updatedUsersList });
+
+    } catch (error) {
+      console.log(`Error deleting User with ID: ${userId}`);
+    };
+  };
+
   render() {
+    const AdminViewComponent = () => (<AdminView
+      users={this.state.users}
+      deleteUser={this.deleteUser}
+    />);
+
     return (
       <Router>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/admin" component={AdminView} />
+          <Route exact path="/admin" render={AdminViewComponent} />
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
           <Route exact path="/apidashboard" component={Dashboard} />
         </Switch>
