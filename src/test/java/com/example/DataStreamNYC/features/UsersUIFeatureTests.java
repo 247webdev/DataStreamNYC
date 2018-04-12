@@ -39,18 +39,18 @@ public class UsersUIFeatureTests {
     public void shouldAllowFullCrudFunctionalityForAUser() throws Exception {
 
         User firstUser = new User(
-                "user1@email.com",
-                "first1",
-                "last1",
+                "firstUser@email.com",
+                "user1First",
+                "user1Last",
                 "password1"
         );
         firstUser = userRepository.save(firstUser);
         Long firstUserId = firstUser.getId();
 
         User secondUser = new User(
-                "user2@email.com",
-                "first2",
-                "last2",
+                "secondUser@email.com",
+                "user2First",
+                "user2Last",
                 "password2"
         );
         secondUser = userRepository.save(secondUser);
@@ -69,5 +69,55 @@ public class UsersUIFeatureTests {
 
         // There should only be two users
         $$("[data-user-display]").shouldHave(size(2));
+
+        // Test that all data shows up for each user
+        $("#user-" + firstUserId + "-first-name").shouldHave(text("user1First"));
+        $("#user-" + firstUserId + "-last-name").shouldHave(text("user1Last"));
+        $("#user-" + firstUserId + "-email").shouldHave(text("firstUser@email.com"));
+
+        $("#user-" + secondUserId + "-first-name").shouldHave(text("user2First"));
+        $("#user-" + secondUserId + "-last-name").shouldHave(text("user2Last"));
+        $("#user-" + secondUserId + "-email").shouldHave(text("secondUser@email.com"));
+
+        // Test Deleting the first user
+        $("#user-" + firstUserId).should(exist);
+        $$("[data-user-display]").shouldHave(size(2));
+
+        $("#delete-user-" + firstUserId).click();
+        $("#user-" + firstUserId).shouldNot(exist);
+
+        $$("[data-user-display]").shouldHave(size(1));
+
+        refresh();
+
+        // Double check the user was deleted
+        $("#user-" + firstUserId).shouldNot(exist);
+        $$("[data-user-display]").shouldHave(size(1));
+
+        // Update a users information
+        $("#update-user").click();
+
+        // Make sure the button worked and the form is now showing
+        $("#update-user-form").should(appear);
+
+        // update the user
+        $("#update-user-email").sendKeys("updatedUser@email.com");
+        $("#update-user-first-name").sendKeys("updatedFirstName");
+        $("#update-user-last-name").sendKeys("updatedLastName");
+        $("#update-user-password").sendKeys("updatedPassword");
+        $("#update-user-submit").click();
+
+        // There should still only be one user
+        $$("[data-user-display]").shouldHave(size(1));
+
+        refresh();
+
+        // There should still be only one user
+        $$("[data-user-display]").shouldHave(size(1));
+
+        // Check that the updated data is showing up correctly for the second User
+        $("#user-" + secondUserId + "-first-name").shouldHave(text("updatedFirstName"));
+        $("#user-" + secondUserId + "-last-name").shouldHave(text("updatedLastName"));
+        $("#user-" + secondUserId + "-email").shouldHave(text("updatedUser@email.com"));
     }
 }
