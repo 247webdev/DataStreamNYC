@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class RegisterForm extends Component {
   constructor() {
@@ -30,7 +31,7 @@ class RegisterForm extends Component {
 
     const val = this.validate(this.state.user);
 
-    if (!val) {
+    if (val === false) {
       return;
     }
 
@@ -61,10 +62,10 @@ class RegisterForm extends Component {
       this.setState({ lastError: 'Last name must be at least 2 characters' });
     }
     if (logUser.password.length < 2) {
-      this.setState({ passError: 'Password name must be at least 2 characters' });
+      this.setState({ passError: 'Password must be at least 2 characters' });
     }
     if (logUser.passwordConfirm.length < 2) {
-      this.setState({ passError: 'Password and Confirmation do not match' });
+      this.setState({ confError: 'Password and Confirmation do not match' });
     }
     if (this.state.firstError !== '' ||
       this.state.lastError !== '' ||
@@ -79,13 +80,15 @@ class RegisterForm extends Component {
     const curUser = this.props.users.find((user) => {
       if (user.email === logUser.email) {
         return user;
+      } else {
+        return null;
       }
     });
 
     if (curUser == null) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   };
 
   render() {

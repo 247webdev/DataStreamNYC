@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 class LoginForm extends Component {
   constructor() {
@@ -34,17 +35,28 @@ class LoginForm extends Component {
     }
   };
 
-  checkUsers = (logUser) => {
-    const curUser = this.props.users.find((user) => {
-      if (user.email === logUser.email &&
-        user.password === logUser.password) {
-        return user;
+  checkUsers = async (logUser) => {
+    try {
+      const userResponse = await axios.get(`${process.env.REACT_APP_USERSAPI}/users/find/${logUser.email}`);
+      if (userResponse == null) {
+
+      } else {
+        if (userResponse.data.password !== logUser.password) {
+          return false;
+        }
+        const updatedUser = {};
+
+        updatedUser['id'] = userResponse.data.id;
+        updatedUser['firstName'] = userResponse.data.firstName;
+        updatedUser['lastName'] = userResponse.data.lastName;
+
+        this.setState({ user: updatedUser });
+        return true;
       }
-    });
-    if (curUser == null) {
+    } catch (error) {
+      console.log("Error creating new User");
       return false;
-    }
-    return true;
+    };
   }
 
   render() {

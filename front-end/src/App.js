@@ -66,17 +66,11 @@ class App extends Component {
   };
 
   loginUser = (loginInfo) => {
-    const thisUser = this.state.users.find((user) => {
-      if (user.email == loginInfo.email) {
-        return user;
-      }
-    });
-
     const curUser = { ...this.state.currentUser };
 
-    curUser.id = thisUser.id;
-    curUser.firstName = thisUser.firstName;
-    curUser.lastName = thisUser.lastName;
+    curUser.id = loginInfo.id;
+    curUser.firstName = loginInfo.firstName;
+    curUser.lastName = loginInfo.lastName;
 
     this.setState({ currentUser: curUser });
   }
