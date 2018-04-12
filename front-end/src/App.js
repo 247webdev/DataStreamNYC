@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import AdminView from './components/AdminView';
 import UpdateUserForm from './components/UpdateUserForm';
 import Dashboard from './components/Dashboard';
+import LogReg from './components/LogReg';
 
 class App extends Component {
   constructor() {
@@ -54,6 +55,10 @@ class App extends Component {
       deleteUser={this.deleteUser}
     />);
 
+    const LogRegComponent = () => (<LogReg
+      users={this.state.users}
+    />);
+
     return (
       <Router>
         <Switch>
@@ -61,6 +66,7 @@ class App extends Component {
           <Route exact path="/admin" render={AdminViewComponent} />
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
           <Route exact path="/apidashboard" component={Dashboard} />
+          <Route exact path="/logreg" render={LogRegComponent} />
         </Switch>
       </Router>
     );
