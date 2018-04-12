@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
@@ -18,9 +18,12 @@ class App extends Component {
       users: [],
       currentUser: {
         id: null,
+        email: '',
         firstName: '',
-        lastName: ''
-      }
+        lastName: '',
+        password: ''
+      },
+      redirectToSuggestionPage: false
     };
   }
 
@@ -64,7 +67,21 @@ class App extends Component {
     };
   };
 
+  loginUser = (loginInfo) => {
+    const curUser = this.state.users.find((user) => {
+      if (user.email == loginInfo.email) {
+        return user;
+      }
+    });
+    this.setState({ currentUser: curUser });
+    this.setState({ redirectToSuggestionPage: true });
+  }
+
   render() {
+    if (this.state.redirectToSuggestionPage) {
+      return <Redirect to="/suggestionboard" />
+    }
+
     const AdminViewComponent = () => (<AdminView
       users={this.state.users}
       deleteUser={this.deleteUser}
@@ -74,7 +91,10 @@ class App extends Component {
 
     const LogRegComponent = () => (<LogReg
       users={this.state.users}
+      loginUser={this.loginUser}
     />);
+
+    const SuggestionBoardComponent = () => (<SuggestionBoard currentUser={this.state.currentUser} />);
 
     return (
       <Router>
@@ -85,6 +105,7 @@ class App extends Component {
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
           <Route exact path="/apidashboard" component={Dashboard} />
           <Route exact path="/logreg" render={LogRegComponent} />
+          <Route exact path="/suggestionboard" render={SuggestionBoardComponent} />
         </Switch>
       </Router>
     );
