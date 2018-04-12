@@ -75,20 +75,47 @@ public class UsersUIFeatureTests {
         $("#user-" + secondUserId + "-last-name").shouldHave(text("user2Last"));
         $("#user-" + secondUserId + "-email").shouldHave(text("secondUser@email.com"));
 
+        // Visit the new user page
+        $("#new-user-link").click();
+
+        // Make sure the link worked and the form is now showing
+        $("#new-user-form").should(appear);
+
+        // Add a new user
+        $("#new-user-email").sendKeys("thirdUser@email.com");
+        $("#new-user-first-name").sendKeys("thirdFirstName");
+        $("#new-user-last-name").sendKeys("thirdLastName");
+        $("#new-user-password").sendKeys("password3");
+        $("#new-user-submit").click();
+
+        // Now there should be three Users
+        $$("[data-user-display]").shouldHave(size(3));
+
+        refresh();
+
+        // Now there should be three Users again after the refresh
+        $$("[data-user-display]").shouldHave(size(3));
+
+        // Check that the data is showing up for the third User
+        Long thirdUserId = secondUserId + 1;
+        $("#user-" + thirdUserId + "-email").shouldHave(text("thirdUser@email.com"));
+        $("#user-" + thirdUserId + "-first-name").shouldHave(text("thirdFirstName"));
+        $("#user-" + thirdUserId + "-last-name").shouldHave(text("thirdLastName"));
+
         // Test Deleting the first user
         $("#user-" + firstUserId).should(exist);
-        $$("[data-user-display]").shouldHave(size(2));
+        $$("[data-user-display]").shouldHave(size(3));
 
         $("#delete-user-" + firstUserId).click();
         $("#user-" + firstUserId).shouldNot(exist);
 
-        $$("[data-user-display]").shouldHave(size(1));
+        $$("[data-user-display]").shouldHave(size(2));
 
         refresh();
 
         // Double check the user was deleted
         $("#user-" + firstUserId).shouldNot(exist);
-        $$("[data-user-display]").shouldHave(size(1));
+        $$("[data-user-display]").shouldHave(size(2));
 
         // Update a users information
         $("#update-user").click();
@@ -103,13 +130,13 @@ public class UsersUIFeatureTests {
         $("#update-user-password").sendKeys("updatedPassword");
         $("#update-user-submit").click();
 
-        // There should still only be one user
-        $$("[data-user-display]").shouldHave(size(1));
+        // There should still only be two users
+        $$("[data-user-display]").shouldHave(size(2));
 
         refresh();
 
-        // There should still be only one user
-        $$("[data-user-display]").shouldHave(size(1));
+        // There should still be only two users
+        $$("[data-user-display]").shouldHave(size(2));
 
         // Check that the updated data is showing up correctly for the second User
         $("#user-" + secondUserId + "-first-name").shouldHave(text("updatedFirstName"));

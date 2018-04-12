@@ -5,6 +5,7 @@ import './App.css';
 
 import HomePage from './components/HomePage';
 import AdminView from './components/AdminView';
+import NewUserForm from './components/NewUserForm';
 import UpdateUserForm from './components/UpdateUserForm';
 import Dashboard from './components/Dashboard';
 import LogReg from './components/LogReg';
@@ -35,6 +36,20 @@ class App extends Component {
     };
   };
 
+  createUser = async (newUser) => {
+    try {
+      const newUserResponse = await axios.post(`${process.env.REACT_APP_USERSAPI}/users`, newUser);
+      const newUserFromDatabase = newUserResponse.data;
+
+      const updatedUsersList = [...this.state.users];
+      updatedUsersList.push(newUserFromDatabase);
+
+      this.setState({ users: updatedUsersList });
+    } catch (error) {
+      console.log("Error creating new User");
+    };
+  };
+
   deleteUser = async (userId, index) => {
     try {
       await axios.delete(`${process.env.REACT_APP_USERSAPI}/users/${userId}`);
@@ -54,6 +69,8 @@ class App extends Component {
       users={this.state.users}
       deleteUser={this.deleteUser}
     />);
+
+    const NewUserFormComponent = () => (<NewUserForm createUser={this.createUser} />);
 
     const LogRegComponent = () => (<LogReg
       users={this.state.users}
