@@ -5,6 +5,7 @@ import './App.css';
 import HomePage from './components/HomePage';
 import AdminView from './components/AdminView';
 import UpdateUserForm from './components/UpdateUserForm';
+import Dashboard from './components/Dashboard';
 
 class App extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/admin" component={AdminView} />
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </Router>
     );
