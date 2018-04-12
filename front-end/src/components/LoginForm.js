@@ -36,8 +36,8 @@ class LoginForm extends Component {
 
   checkUsers = (logUser) => {
     const curUser = this.props.users.find((user) => {
-      if (user.email == logUser.email &&
-        user.password == logUser.password) {
+      if (user.email === logUser.email &&
+        user.password === logUser.password) {
         return user;
       }
     });
@@ -72,7 +72,7 @@ class LoginForm extends Component {
               onChange={this.handleChange}
             />
           </label>
-          { this.state.error == '' ? null : <p>{this.state.error}</p> }
+          { this.state.error === '' ? null : <p>{this.state.error}</p> }
           <button id="login-submit" type="submit">Login</button>
         </form>
       </div>

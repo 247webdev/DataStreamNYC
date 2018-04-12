@@ -11,7 +11,11 @@ const LogReg = (props) => {
         users={props.users}
         loginUser={props.loginUser}
       />
-      <RegisterForm />
+      <RegisterForm
+        users={props.users}
+        createUser={props.createUser}
+        loginUser={props.loginUser}
+      />
     </div>
   );
 }

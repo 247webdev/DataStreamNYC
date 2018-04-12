@@ -91,6 +91,7 @@ class App extends Component {
 
     const LogRegComponent = () => (<LogReg
       users={this.state.users}
+      createUser={this.createUser}
       loginUser={this.loginUser}
     />);
 
