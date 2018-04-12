@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class LoginForm extends Component {
   constructor() {
@@ -47,7 +48,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    if (this.state.redirectToAdminPage) {
+    if (this.state.redirectToSuggestionPage) {
       return <Redirect to="/suggestionboard" />
     }
 

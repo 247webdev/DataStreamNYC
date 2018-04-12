@@ -7,7 +7,10 @@ import RegisterForm from './RegisterForm';
 const LogReg = (props) => {
   return (
     <div>
-      <LoginForm />
+      <LoginForm
+        users={props.users}
+        loginUser={props.loginUser}
+      />
       <RegisterForm />
     </div>
   );

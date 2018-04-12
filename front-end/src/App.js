@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
@@ -9,6 +9,7 @@ import NewUserForm from './components/NewUserForm';
 import UpdateUserForm from './components/UpdateUserForm';
 import Dashboard from './components/Dashboard';
 import LogReg from './components/LogReg';
+import SuggestionBoard from './components/SuggestionBoard';
 
 class App extends Component {
   constructor() {
@@ -18,12 +19,9 @@ class App extends Component {
       users: [],
       currentUser: {
         id: null,
-        email: '',
         firstName: '',
-        lastName: '',
-        password: ''
-      },
-      redirectToSuggestionPage: false
+        lastName: ''
+      }
     };
   }
 
@@ -68,20 +66,22 @@ class App extends Component {
   };
 
   loginUser = (loginInfo) => {
-    const curUser = this.state.users.find((user) => {
+    const thisUser = this.state.users.find((user) => {
       if (user.email == loginInfo.email) {
         return user;
       }
     });
+
+    const curUser = { ...this.state.currentUser };
+
+    curUser.id = thisUser.id;
+    curUser.firstName = thisUser.firstName;
+    curUser.lastName = thisUser.lastName;
+
     this.setState({ currentUser: curUser });
-    this.setState({ redirectToSuggestionPage: true });
   }
 
   render() {
-    if (this.state.redirectToSuggestionPage) {
-      return <Redirect to="/suggestionboard" />
-    }
-
     const AdminViewComponent = () => (<AdminView
       users={this.state.users}
       deleteUser={this.deleteUser}
