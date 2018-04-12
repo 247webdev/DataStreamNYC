@@ -30,7 +30,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <div className="nav">
           <Link to="/" id="home-page-link">Home</Link> |&nbsp;
-          <Link to="/admin" id="admin-view-link">View Users</Link>
+          <Link to="/admin" id="admin-view-link">Admin View</Link>
         </div>
         <h1 className="white"><u>API Dashboard</u></h1>
         <QueryForm runSearch={this.runSearch} />

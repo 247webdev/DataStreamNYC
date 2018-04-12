@@ -27,7 +27,7 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/admin" component={AdminView} />
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
-          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/apidashboard" component={Dashboard} />
         </Switch>
       </Router>
     );

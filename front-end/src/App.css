@@ -70,3 +70,99 @@ body {
   height: 480px;
   background: url("./skyline.jpg");
 }
+
+#users-wrapper {
+  text-align: center;
+  width: 700px;
+  margin: 10px auto;
+  padding: 15px 0 0;
+  border: 1px solid black;
+  background-color: whitesmoke;
+  border-bottom: none;
+}
+
+.left, .right {
+  display: inline-block;
+  width: 25%;
+  margin: 0 auto;
+  vertical-align: top;
+  padding: 10px;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.first, .last {
+  display: inline-block;
+  margin: 0 20px 10px 0;
+}
+
+.right button {
+  margin-top: 10px;
+
+}
+
+.forms {
+  width: 500px;
+  padding: 15px;
+  padding-bottom: 40px;
+  margin: 10px auto;
+  text-align: center;
+  border: 1px solid black;
+  background-color: whitesmoke;
+}
+
+.forms label {
+  display: block;
+  width: 80%;
+  margin: 15px;
+}
+
+.forms input {
+  width: 250px;
+  float: right;
+}
+
+.forms button {
+  float: right;
+  margin-right: 85px;
+}
+
+.dashboard {
+  width: 800px;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.query {
+  width: 100%;
+  border: 1px solid black;
+  background-color: whitesmoke;
+}
+
+.a, .i, .t {
+  display: inline-block;
+  margin: 0 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+
+.white {
+  color: whitesmoke;
+  letter-spacing: 1px;
+}
+
+.nav {
+  width: 200px;
+  padding: 10px;
+  margin: 10px auto;
+  text-align: center;
+  border: 1px solid black;
+  background-color: whitesmoke;
+}
