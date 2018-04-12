@@ -9,7 +9,7 @@ const AdminView = (props) => {
       <div id="users-wrapper">
         <div>
           <Link to="/" id="home-page-link">Home</Link> |&nbsp;
-          <Link to="/logreg">Suggestion Board</Link> |&nbsp;
+          <Link to="/suggestionboard">Suggestion Board</Link> |&nbsp;
           <Link to="/apidashboard" id="api-page-link">API Dashboard</Link>
         </div>
         <h1><u>Current Users</u></h1>

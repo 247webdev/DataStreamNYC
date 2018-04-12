@@ -67,7 +67,7 @@ class NewUserForm extends Component {
           <label htmlFor="password">Password:
             <input
               id="new-user-password"
-              type="text"
+              type="password"
               name="password"
               onChange={this.handleChange}
             />

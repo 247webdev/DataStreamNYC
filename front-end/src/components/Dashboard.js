@@ -30,6 +30,7 @@ class Dashboard extends Component {
       <div className="dashboard">
         <div className="nav">
           <Link to="/" id="home-page-link">Home</Link> |&nbsp;
+          <Link to="/suggestionboard">Suggestion Board</Link> |&nbsp;
           <Link to="/admin" id="admin-view-link">Admin View</Link>
         </div>
         <h1 className="white"><u>API Dashboard</u></h1>

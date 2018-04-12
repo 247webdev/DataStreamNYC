@@ -9,8 +9,8 @@ class RegisterForm extends Component {
       error: '',
       firstError: '',
       lastError: '',
-      passError: '',
-      confError: '',
+      // passError: '',
+      // confError: '',
       user: {},
       redirectToSuggestionPage: false
     };
@@ -42,7 +42,7 @@ class RegisterForm extends Component {
       userToReg['email'] = this.state.user.email;
       userToReg['firstName'] = this.state.user.firstName;
       userToReg['lastName'] = this.state.user.lastName;
-      userToReg['password'] = this.state.user.password;
+      userToReg['password'] = '';
 
       this.props.createUser(userToReg);
 
@@ -61,16 +61,8 @@ class RegisterForm extends Component {
     if (logUser.lastName.length < 2) {
       this.setState({ lastError: 'Last name must be at least 2 characters' });
     }
-    if (logUser.password.length < 2) {
-      this.setState({ passError: 'Password must be at least 2 characters' });
-    }
-    if (logUser.passwordConfirm.length < 2) {
-      this.setState({ confError: 'Password and Confirmation do not match' });
-    }
     if (this.state.firstError !== '' ||
-      this.state.lastError !== '' ||
-      this.state.passError !== '' ||
-      this.state.confError !== '') {
+      this.state.lastError !== '') {
         return false;
     }
     return true;
@@ -126,7 +118,7 @@ class RegisterForm extends Component {
               onChange={this.handleChange}
             />
           </label>
-          {this.state.passError === '' ? null : <p>{this.state.passError}</p>}
+          {/* {this.state.passError === '' ? null : <p>{this.state.passError}</p>}
           <label htmlFor="password">Password:
             <input
               id="register-password"
@@ -143,7 +135,7 @@ class RegisterForm extends Component {
               name="passwordConfirm"
               onChange={this.handleChange}
             />
-          </label>
+          </label> */}
           {this.state.error === '' ? null : <p>{this.state.error}</p>}
           <button id="register-submit" type="submit">Register</button>
         </form>

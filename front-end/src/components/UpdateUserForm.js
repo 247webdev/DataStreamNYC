@@ -77,7 +77,7 @@ class UpdateUserForm extends Component {
           <label htmlFor="password">Password:
             <input
               id="update-user-password"
-              type="text"
+              type="password"
               name="password"
               onChange={this.handleChange}
             />

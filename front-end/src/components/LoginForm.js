@@ -39,11 +39,8 @@ class LoginForm extends Component {
     try {
       const userResponse = await axios.get(`${process.env.REACT_APP_USERSAPI}/users/find/${logUser.email}`);
       if (userResponse == null) {
-
+        return false;
       } else {
-        if (userResponse.data.password !== logUser.password) {
-          return false;
-        }
         const updatedUser = {};
 
         updatedUser['id'] = userResponse.data.id;
@@ -79,7 +76,7 @@ class LoginForm extends Component {
           <label htmlFor="password">Password:
             <input
               id="login-password"
-              type="text"
+              type="password"
               name="password"
               onChange={this.handleChange}
             />
