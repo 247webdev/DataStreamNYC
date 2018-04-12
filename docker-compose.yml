@@ -75,3 +75,11 @@ services:
       command: 'npm start'
       environment:
         - REACT_APP_USERSAPI=http://localhost:8080
+  flyway-migrations:
+      image: jimmyoak/flyway:4.0.3
+      command: wait-for-it --timeout=30 --strict postgresdev:5432 -- flyway migrate
+      volumes:
+        - './flyway-migrations/conf:/flyway/conf'
+        - './flyway-migrations/sql:/flyway/sql'
+      depends_on:
+        - postgresdev

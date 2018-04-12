@@ -13,6 +13,7 @@ const AdminView = (props) => {
           <Link to="/apidashboard" id="api-page-link">API Dashboard</Link>
         </div>
         <h1><u>Current Users</u></h1>
+        <Link to="/new" id="new-user-link">Create User</Link>
         <hr/>
         <div className="list-group">
           {

@@ -81,6 +81,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/admin" render={AdminViewComponent} />
+          <Route exact path="/new" render={NewUserFormComponent} />
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
           <Route exact path="/apidashboard" component={Dashboard} />
           <Route exact path="/logreg" render={LogRegComponent} />
