@@ -74,7 +74,6 @@ body {
 
 .left, .right {
   display: inline-block;
-  width: 25%;
   margin: 0 auto;
   vertical-align: top;
   padding: 10px;
@@ -82,10 +81,12 @@ body {
 
 .left {
   text-align: left;
+  width: 40%;
 }
 
 .right {
   text-align: right;
+  width: 25%;
 }
 
 .first, .last {
