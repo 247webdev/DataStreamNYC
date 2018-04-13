@@ -10,6 +10,8 @@ class SuggestionBoard extends Component {
     super();
 
     this.state = {
+      update: '',
+      userName: 'anonymous',
       suggestions: []
     };
   }
@@ -41,14 +43,38 @@ class SuggestionBoard extends Component {
     }
   };
 
+  handleChange = (event) => {    
+    this.setState({ update: event.target.value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    this.setState({ userName: this.state.update });
+  };
+
   render() {
     return (
       <div>
         <Link to="/">Home</Link> |&nbsp;
         <Link to="/apidashboard">API Dashboard</Link> |&nbsp;
         <Link to="/admin" id="admin-view-link">Admin View</Link>
+
+        <form onSubmit={this.handleSubmit} id="user-name-form">
+          <label htmlFor="userName">
+            <input
+              id="new-suggestion-user-name"
+              type="text"
+              name="userName"
+              onChange={this.handleChange}
+            />
+            <button id="user-name-submit" type="submit">Submit</button>
+          </label>
+        </form>
+
         <SuggestionForm
           createSuggestion={this.createSuggestion}
+          userName={this.state.userName}
         />
         <SuggestionList
           suggestions={this.state.suggestions}

@@ -17,6 +17,7 @@ class SuggestionForm extends Component {
 
     const updatedSuggestion = { ...this.state.suggestion };
     updatedSuggestion[attributeToChange] = newValue;
+    updatedSuggestion['userName'] = this.props.userName;
     
     this.setState({ suggestion: updatedSuggestion });
   };

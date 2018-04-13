@@ -34,7 +34,7 @@ public class SuggestionsUIFeatureTests {
     }
 
     @Test
-    public void shouldAllowHalfCrudFunctionalityForAUser() throws Exception {
+    public void shouldAllowMostCrudFunctionalityForAUser() throws Exception {
 
         Suggestion firstSuggestion = new Suggestion(
                 "title1",
@@ -75,10 +75,13 @@ public class SuggestionsUIFeatureTests {
         $("#suggestion-" + secondSuggestionId + "-content").shouldHave(text("suggestion2Last"));
         $("#suggestion-" + secondSuggestionId + "-userName").shouldHave(text("fifthUser"));
 
+        // Add User name
+        $("#new-suggestion-user-name").sendKeys("newUserName");
+        $("#user-name-submit").click();
+
         // Add a new suggestion
         $("#new-suggestion-title").sendKeys("newTitle");
         $("#new-suggestion-content").sendKeys("newSuggestionContent");
-        $("#new-suggestion-user-name").sendKeys("newUserName");
         $("#new-suggestion-submit").click();
 
         // Now there should be three Suggestions
@@ -94,6 +97,21 @@ public class SuggestionsUIFeatureTests {
         $("#suggestion-" + thirdSuggestionId + "-title").shouldHave(text("newTitle"));
         $("#suggestion-" + thirdSuggestionId + "-content").shouldHave(text("newSuggestionContent"));
         $("#suggestion-" + thirdSuggestionId + "-user-name").shouldHave(text("newUserName"));
+
+        // Test Deleting the first suggestion
+        $("#user-" + firstSuggestionId).should(exist);
+        $$("[data-suggestion-display]").shouldHave(size(3));
+
+        $("#delete-suggestion-" + firstSuggestionId).click();
+        $("#suggestion-" + firstSuggestionId).shouldNot(exist);
+
+        $$("[data-suggestion-display]").shouldHave(size(2));
+
+        refresh();
+
+        // Double check the suggestion was deleted
+        $("#suggestion-" + firstSuggestionId).shouldNot(exist);
+        $$("[data-suggestion-display]").shouldHave(size(2));
 
         // Leave the suggestions page and visit the admin view page
         $("#admin-view-link").click();
