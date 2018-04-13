@@ -8,7 +8,6 @@ import AdminView from './components/AdminView';
 import NewUserForm from './components/NewUserForm';
 import UpdateUserForm from './components/UpdateUserForm';
 import Dashboard from './components/Dashboard';
-// import LogReg from './components/LogReg';
 import SuggestionBoard from './components/SuggestionBoard';
 
 class App extends Component {
@@ -78,16 +77,6 @@ class App extends Component {
     };
   };
 
-  // loginUser = (loginInfo) => {
-  //   const curUser = { ...this.state.currentUser };
-
-  //   curUser.id = loginInfo.id;
-  //   curUser.firstName = loginInfo.firstName;
-  //   curUser.lastName = loginInfo.lastName;
-
-  //   this.setState({ currentUser: curUser });
-  // }
-
   render() {
     const AdminViewComponent = () => (<AdminView
       users={this.state.users}
@@ -95,13 +84,6 @@ class App extends Component {
     />);
 
     const NewUserFormComponent = () => (<NewUserForm createUser={this.createUser} />);
-
-    // const LogRegComponent = () => (<LogReg
-    //   users={this.state.users}
-    //   createUser={this.createUser}
-    // />);
-
-    // const SuggestionBoardComponent = () => (<SuggestionBoard currentUser={this.state.currentUser} />);
 
     return (
       <Router>
@@ -111,7 +93,6 @@ class App extends Component {
           <Route exact path="/new" render={NewUserFormComponent} />
           <Route path="/update/:userId/:index" component={UpdateUserForm} />
           <Route exact path="/apidashboard" component={Dashboard} />
-          {/* <Route exact path="/logreg" render={LogRegComponent} /> */}
           <Route exact path="/suggestionboard" component={SuggestionBoard} />
         </Switch>
       </Router>
