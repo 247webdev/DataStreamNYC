@@ -56,7 +56,7 @@ public class SuggestionsController {
 
         suggestionFromDb.setTitle(suggestionRequest.getTitle());
         suggestionFromDb.setContent(suggestionRequest.getContent());
-        suggestionFromDb.setUserId(suggestionRequest.getUserId());
+        suggestionFromDb.setUserName(suggestionRequest.getUserName());
 
         return suggestionRepository.save(suggestionFromDb);
     }

@@ -21,48 +21,25 @@ import static com.codeborne.selenide.Condition.*;
 public class SuggestionsUIFeatureTests {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private SuggestionRepository suggestionRepository;
 
     @Before
     public void setUp() {
-        userRepository.deleteAll();
         suggestionRepository.deleteAll();
     }
 
     @After
     public void tearDown() {
-        userRepository.deleteAll();
         suggestionRepository.deleteAll();
     }
 
     @Test
     public void shouldAllowFullCrudFunctionalityForAUser() throws Exception {
 
-        User firstUser = new User(
-                "firstUser@email.com",
-                "user1First",
-                "user1Last",
-                "password1"
-        );
-        firstUser = userRepository.save(firstUser);
-        Long firstUserId = firstUser.getId();
-
-        User secondUser = new User(
-                "secondUser@email.com",
-                "user2First",
-                "user2Last",
-                "password2"
-        );
-        secondUser = userRepository.save(secondUser);
-        Long secondUserId = secondUser.getId();
-
         Suggestion firstSuggestion = new Suggestion(
                 "title1",
                 "suggestionContent1",
-                2L
+                "secondUser"
         );
         firstSuggestion = suggestionRepository.save(firstSuggestion);
         Long firstSuggestionId = firstSuggestion.getId();
@@ -70,11 +47,32 @@ public class SuggestionsUIFeatureTests {
         Suggestion secondSuggestion = new Suggestion(
                 "title2",
                 "suggestionContent2",
-                1L
+                "fifthUser"
         );
         secondSuggestion = suggestionRepository.save(secondSuggestion);
         Long secondSuggestionId = secondSuggestion.getId();
 
         System.setProperty("selenide.browser", "Chrome");
+
+        // Visit the UI in a browser
+        open("http://localhost:3000/");
+
+        // Visit the admin view page
+        $("#suggestions-link").click();
+
+        // Make sure the link worked and the form is now showing
+        $("#suggestions-wrapper").should(appear);
+
+        // There should only be two users
+        $$("[data-suggestion-display]").shouldHave(size(2));
+
+        // Test that all data shows up for each user
+        $("#suggestion-" + firstSuggestionId + "-title").shouldHave(text("title1"));
+        $("#suggestion-" + firstSuggestionId + "-content").shouldHave(text("suggestionContent1"));
+        $("#suggestion-" + firstSuggestionId + "-userName").shouldHave(text("secondUser"));
+
+        $("#suggestion-" + secondSuggestionId + "-title").shouldHave(text("suggestion2First"));
+        $("#suggestion-" + secondSuggestionId + "-content").shouldHave(text("suggestion2Last"));
+        $("#suggestion-" + secondSuggestionId + "-userName").shouldHave(text("fifthUser"));
     }
 }

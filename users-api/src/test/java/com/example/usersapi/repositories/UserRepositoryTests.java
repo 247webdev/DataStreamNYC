@@ -54,12 +54,12 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void findAll_returnsUserName() {
+    public void findAll_returnsEmail() {
         Iterable<User> usersFromDb = userRepository.findAll();
 
-        String secondUsersUserName = Iterables.get(usersFromDb, 1).getEmail();
+        String secondUsersEmail = Iterables.get(usersFromDb, 1).getEmail();
 
-        assertThat(secondUsersUserName, is("user2@email.com"));
+        assertThat(secondUsersEmail, is("user2@email.com"));
     }
 
     @Test

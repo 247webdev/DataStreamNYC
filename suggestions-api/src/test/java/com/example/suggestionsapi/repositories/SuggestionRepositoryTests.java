@@ -30,13 +30,13 @@ public class SuggestionRepositoryTests {
         Suggestion firstSuggestion = new Suggestion(
                 "title1",
                 "contentSuggestion1",
-                3L
+                "user3"
         );
 
         Suggestion secondSuggestion = new Suggestion(
                 "title2",
                 "contentSuggestion2",
-                5L
+                "user5"
         );
 
         entityManager.persist(firstSuggestion);
@@ -55,26 +55,26 @@ public class SuggestionRepositoryTests {
     public void findAll_returnsTitle() {
         Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
 
-        String secondSuggestionsSuggestionName = Iterables.get(suggestionsFromDb, 1).getTitle();
+        String secondSuggestionsTitle = Iterables.get(suggestionsFromDb, 1).getTitle();
 
-        assertThat(secondSuggestionsSuggestionName, is("title2"));
+        assertThat(secondSuggestionsTitle, is("title2"));
     }
 
     @Test
     public void findAll_returnsContent() {
         Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
 
-        String secondSuggestionsFirstName = Iterables.get(suggestionsFromDb, 1).getContent();
+        String secondSuggestionsContent = Iterables.get(suggestionsFromDb, 1).getContent();
 
-        assertThat(secondSuggestionsFirstName, is("contentSuggestion2"));
+        assertThat(secondSuggestionsContent, is("contentSuggestion2"));
     }
 
     @Test
     public void findAll_returnsUserId() {
         Iterable<Suggestion> suggestionsFromDb = suggestionRepository.findAll();
 
-        Long secondSuggestionsLastName = Iterables.get(suggestionsFromDb, 1).getUserId();
+        String secondSuggestionsUserName = Iterables.get(suggestionsFromDb, 1).getUserName();
 
-        assertThat(secondSuggestionsLastName, is(5L));
+        assertThat(secondSuggestionsUserName, is("user5"));
     }
 }

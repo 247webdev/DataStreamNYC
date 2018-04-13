@@ -41,13 +41,13 @@ public class SuggestionsApiFeatureTests {
         Suggestion firstSuggestion = new Suggestion(
                 "title1",
                 "contentSuggestion1",
-                1L
+                "user1"
         );
 
         Suggestion secondSuggestion = new Suggestion(
                 "title2",
                 "contentSuggestion2",
-                2L
+                "user2"
         );
 
         Stream.of(firstSuggestion, secondSuggestion)
@@ -59,7 +59,7 @@ public class SuggestionsApiFeatureTests {
         Suggestion suggestionNotYetInDb = new Suggestion(
                 "newTitle",
                 "newContent",
-                2L
+                "newUser"
         );
 
         given()
@@ -78,7 +78,7 @@ public class SuggestionsApiFeatureTests {
                 .statusCode(is(200))
                 .and().body(containsString("title1"))
                 .and().body(containsString("contentSuggestion2"))
-                .and().body(containsString("newTitle"));
+                .and().body(containsString("newUser"));
 
         // Test finding one suggestion by ID
         when()
@@ -86,7 +86,8 @@ public class SuggestionsApiFeatureTests {
             .then()
                 .statusCode(is(200))
                 .and().body(containsString("title2"))
-                .and().body(containsString("contentSuggestion2"));
+                .and().body(containsString("contentSuggestion2"))
+                .and().body(containsString("user2"));
 
         // Test updating a suggestion
         secondSuggestion.setTitle("changedTitle");

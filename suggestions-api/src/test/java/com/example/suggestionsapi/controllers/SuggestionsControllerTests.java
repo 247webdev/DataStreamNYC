@@ -49,13 +49,13 @@ public class SuggestionsControllerTests {
         Suggestion firstSuggestion = new Suggestion(
                 "title1",
                 "contentSuggestion1",
-                2L
+                "user2"
         );
 
         Suggestion secondSuggestion = new Suggestion(
                 "title2",
                 "contentSuggestion2",
-                1L
+                "user4"
         );
 
         Iterable<Suggestion> mockSuggestions =
@@ -71,7 +71,7 @@ public class SuggestionsControllerTests {
         newSuggestion = new Suggestion(
                 "newTitle",
                 "newContentSuggestion",
-                3L
+                "user8"
         );
 
         given(mockSuggestionRepository.save(newSuggestion)).willReturn(newSuggestion);
@@ -79,7 +79,7 @@ public class SuggestionsControllerTests {
         updatedSecondSuggestion = new Suggestion(
                 "updatedTitle",
                 "updatedContentSuggestion",
-                1L
+                "user4"
         );
 
         given(mockSuggestionRepository.save(updatedSecondSuggestion)).willReturn(updatedSecondSuggestion);
@@ -118,11 +118,11 @@ public class SuggestionsControllerTests {
     }
 
     @Test
-    public void findAllSuggestions_success_returnUserIdForEachSuggestion() throws Exception {
+    public void findAllSuggestions_success_returnUserNameForEachSuggestion() throws Exception {
 
         this.mockMvc
                 .perform(get("/"))
-                .andExpect(jsonPath("$[0].userId", is(2)));
+                .andExpect(jsonPath("$[0].userName", is("user2")));
     }
 
     @Test
@@ -150,11 +150,11 @@ public class SuggestionsControllerTests {
     }
 
     @Test
-    public void findSuggestionById_success_returnUserId() throws Exception {
+    public void findSuggestionById_success_returnUserName() throws Exception {
 
         this.mockMvc
                 .perform(get("/1"))
-                .andExpect(jsonPath("$.userId", is(2)));
+                .andExpect(jsonPath("$.userName", is("user2")));
     }
 
     @Test
@@ -234,7 +234,7 @@ public class SuggestionsControllerTests {
     }
 
     @Test
-    public void createSuggestion_success_returnsUserId() throws Exception {
+    public void createSuggestion_success_returnsUserName() throws Exception {
 
         this.mockMvc
                 .perform(
@@ -242,7 +242,7 @@ public class SuggestionsControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(newSuggestion))
                 )
-                .andExpect(jsonPath("$.userId", is(3)));
+                .andExpect(jsonPath("$.userName", is("user8")));
     }
 
     @Test
@@ -282,7 +282,7 @@ public class SuggestionsControllerTests {
     }
 
     @Test
-    public void updateSuggestionById_success_returnsUpdatedUserId() throws Exception {
+    public void updateSuggestionById_success_returnsUpdatedUserName() throws Exception {
 
         this.mockMvc
                 .perform(
@@ -290,7 +290,7 @@ public class SuggestionsControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObjectMapper.writeValueAsString(updatedSecondSuggestion))
                 )
-                .andExpect(jsonPath("$.userId", is(1)));
+                .andExpect(jsonPath("$.userName", is("user4")));
     }
 
     @Test

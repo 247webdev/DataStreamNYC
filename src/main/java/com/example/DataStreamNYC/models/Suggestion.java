@@ -19,12 +19,12 @@ public class Suggestion {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "USER_ID")
-    private Long userId;
+    @Column(name = "USER_NAME")
+    private String userName;
 
-    public Suggestion(String title, String content, Long userId) {
+    public Suggestion(String title, String content, String userName) {
         this.title = title;
         this.content = content;
-        this.userId = userId;
+        this.userName = userName;
     }
 }
