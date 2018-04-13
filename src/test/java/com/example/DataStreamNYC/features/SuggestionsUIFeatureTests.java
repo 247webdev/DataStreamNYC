@@ -94,5 +94,11 @@ public class SuggestionsUIFeatureTests {
         $("#suggestion-" + thirdSuggestionId + "-title").shouldHave(text("newTitle"));
         $("#suggestion-" + thirdSuggestionId + "-content").shouldHave(text("newSuggestionContent"));
         $("#suggestion-" + thirdSuggestionId + "-user-name").shouldHave(text("newUserName"));
+
+        // Leave the suggestions page and visit the admin view page
+        $("#admin-view-link").click();
+
+        // Make sure the link worked and the admin view page is now showing
+        $("#users-wrapper").should(appear);
     }
 }

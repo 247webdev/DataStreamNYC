@@ -20,7 +20,7 @@ const HomePage = (props) => {
           </div>
           <div className="homenav">
             <Link to="/apidashboard">API Dashboard</Link> |&nbsp;
-            <Link to="/suggestionboard">Suggestion Board</Link> |&nbsp;
+            <Link to="/suggestionboard" id="suggestions-link">Suggestion Board</Link> |&nbsp;
             <Link to="/admin" id="admin-view-link">Admin View</Link>
           </div>
         </div>
