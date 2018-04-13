@@ -72,7 +72,7 @@ services:
       depends_on:
         - users-api
         - suggestions-api
-      command: 'npm start'
+      command: 'npm run ec2'
       environment:
         - REACT_APP_USERSAPI=http://54.183.107.85:8080
   flyway-migrations:
