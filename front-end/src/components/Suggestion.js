@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../App.css';
 
 const Suggestion = (props) => {
@@ -7,10 +6,10 @@ const Suggestion = (props) => {
     <div id={`suggestion-${props.suggestion.id}`} data-suggestion-display className="list-group-item">
       <div className="left">
         <div id={`suggestion-${props.suggestion.id}-title`} className="title">
-          {props.suggestion.firstName}
+          {props.suggestion.title}
         </div>
         <div id={`suggestion-${props.suggestion.id}-content`} className="content">
-          {props.suggestion.lastName}
+          {props.suggestion.content}
         </div>
       </div>
       <hr/>

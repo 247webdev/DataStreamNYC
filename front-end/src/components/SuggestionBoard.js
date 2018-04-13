@@ -17,11 +17,10 @@ class SuggestionBoard extends Component {
   async componentDidMount() {
     try {
       const suggestionsResponse = await axios.get(`${process.env.REACT_APP_USERSAPI}/suggestions`);
-      const suggestionsFromDatabase = suggestionsResponse.data;
-      this.setState({ 
+      this.setState({
         suggestions: suggestionsResponse.data,
         suggestionsResponse
-       });
+      });
     } catch (error) {
       console.log(error);
     };
@@ -29,7 +28,8 @@ class SuggestionBoard extends Component {
 
   createSuggestion = async (newSuggestion) => {
     try {
-      const newSuggestionResponse = await axios.post(`${process.env.REACT_APP_USERSAPI}/users`, newSuggestion);
+      newSuggestion['userId'] = 1;
+      const newSuggestionResponse = await axios.post(`${process.env.REACT_APP_USERSAPI}/suggestions`, newSuggestion);
       const newSuggestionFromDatabase = newSuggestionResponse.data;
 
       const updatedSuggestionsList = [...this.state.suggestions];
@@ -44,8 +44,15 @@ class SuggestionBoard extends Component {
   render() {
     return (
       <div>
-        <SuggestionForm />
-        <SuggestionList />
+        <Link to="/">Home</Link> |&nbsp;
+        <Link to="/apidashboard">API Dashboard</Link> |&nbsp;
+        <Link to="/admin" id="admin-view-link">Admin View</Link>
+        <SuggestionForm
+          createSuggestion={this.createSuggestion}
+        />
+        <SuggestionList
+          suggestions={this.state.suggestions}
+        />
       </div>
     );
   }

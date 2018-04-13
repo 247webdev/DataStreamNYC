@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
 
 class SuggestionForm extends Component {
@@ -6,8 +7,7 @@ class SuggestionForm extends Component {
     super();
 
     this.state = {
-      suggestion: {},
-      redirectToSuggestionsPage: false
+      suggestion: {}
     };
   }
 
@@ -25,15 +25,9 @@ class SuggestionForm extends Component {
     event.preventDefault();
 
     this.props.createSuggestion(this.state.suggestion);
-
-    this.setState({ redirectToSuggestionPage: true });
   };
 
   render() {
-    if (this.state.redirectToSuggestionPage) {
-      return <Redirect to="/suggestionboard" />
-    }
-
     return (
       <div className="forms">
         <form onSubmit={this.handleSubmit} id="new-suggestion-form">
