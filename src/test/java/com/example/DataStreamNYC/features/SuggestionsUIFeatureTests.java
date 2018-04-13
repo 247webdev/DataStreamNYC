@@ -34,7 +34,7 @@ public class SuggestionsUIFeatureTests {
     }
 
     @Test
-    public void shouldAllowFullCrudFunctionalityForAUser() throws Exception {
+    public void shouldAllowHalfCrudFunctionalityForAUser() throws Exception {
 
         Suggestion firstSuggestion = new Suggestion(
                 "title1",
@@ -57,16 +57,16 @@ public class SuggestionsUIFeatureTests {
         // Visit the UI in a browser
         open("http://localhost:3000/");
 
-        // Visit the admin view page
+        // Visit the suggestions view page
         $("#suggestions-link").click();
 
-        // Make sure the link worked and the form is now showing
+        // Make sure the link worked and the suggestions are now showing
         $("#suggestions-wrapper").should(appear);
 
-        // There should only be two users
+        // There should only be two suggestions
         $$("[data-suggestion-display]").shouldHave(size(2));
 
-        // Test that all data shows up for each user
+        // Test that all data shows up for each suggestion
         $("#suggestion-" + firstSuggestionId + "-title").shouldHave(text("title1"));
         $("#suggestion-" + firstSuggestionId + "-content").shouldHave(text("suggestionContent1"));
         $("#suggestion-" + firstSuggestionId + "-userName").shouldHave(text("secondUser"));
@@ -74,5 +74,25 @@ public class SuggestionsUIFeatureTests {
         $("#suggestion-" + secondSuggestionId + "-title").shouldHave(text("suggestion2First"));
         $("#suggestion-" + secondSuggestionId + "-content").shouldHave(text("suggestion2Last"));
         $("#suggestion-" + secondSuggestionId + "-userName").shouldHave(text("fifthUser"));
+
+        // Add a new suggestion
+        $("#new-suggestion-title").sendKeys("newTitle");
+        $("#new-suggestion-content").sendKeys("newSuggestionContent");
+        $("#new-suggestion-user-name").sendKeys("newUserName");
+        $("#new-suggestion-submit").click();
+
+        // Now there should be three Suggestions
+        $$("[data-suggestion-display]").shouldHave(size(3));
+
+        refresh();
+
+        // Now there should be three Suggestions again after the refresh
+        $$("[data-suggestion-display]").shouldHave(size(3));
+
+        // Check that the data is showing up for the third Suggestion
+        Long thirdSuggestionId = secondSuggestionId + 1;
+        $("#suggestion-" + thirdSuggestionId + "-title").shouldHave(text("newTitle"));
+        $("#suggestion-" + thirdSuggestionId + "-content").shouldHave(text("newSuggestionContent"));
+        $("#suggestion-" + thirdSuggestionId + "-user-name").shouldHave(text("newUserName"));
     }
 }
