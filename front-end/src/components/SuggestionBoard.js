@@ -43,6 +43,20 @@ class SuggestionBoard extends Component {
     }
   };
 
+  deleteSuggestion = async (suggestionId, index) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_USERSAPI}/suggestions/${suggestionId}`);
+
+      const updatedSuggestionsList = [...this.state.suggestions];
+      updatedSuggestionsList.splice(index, 1);
+
+      this.setState({ suggestions: updatedSuggestionsList });
+
+    } catch (error) {
+      console.log(`Error deleting Suggestion with ID: ${suggestionId}`);
+    };
+  };
+
   handleChange = (event) => {    
     this.setState({ update: event.target.value });
   };
@@ -77,6 +91,7 @@ class SuggestionBoard extends Component {
           userName={this.state.userName}
         />
         <SuggestionList
+          deleteSuggestion={this.deleteSuggestion}
           suggestions={this.state.suggestions}
           userName={this.state.userName}
         />

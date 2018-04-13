@@ -69,11 +69,11 @@ public class SuggestionsUIFeatureTests {
         // Test that all data shows up for each suggestion
         $("#suggestion-" + firstSuggestionId + "-title").shouldHave(text("title1"));
         $("#suggestion-" + firstSuggestionId + "-content").shouldHave(text("suggestionContent1"));
-        $("#suggestion-" + firstSuggestionId + "-userName").shouldHave(text("secondUser"));
+        $("#suggestion-" + firstSuggestionId + "-user-name").shouldHave(text("secondUser"));
 
-        $("#suggestion-" + secondSuggestionId + "-title").shouldHave(text("suggestion2First"));
-        $("#suggestion-" + secondSuggestionId + "-content").shouldHave(text("suggestion2Last"));
-        $("#suggestion-" + secondSuggestionId + "-userName").shouldHave(text("fifthUser"));
+        $("#suggestion-" + secondSuggestionId + "-title").shouldHave(text("title2"));
+        $("#suggestion-" + secondSuggestionId + "-content").shouldHave(text("suggestionContent2"));
+        $("#suggestion-" + secondSuggestionId + "-user-name").shouldHave(text("fifthUser"));
 
         // Add User name
         $("#new-suggestion-user-name").sendKeys("newUserName");
@@ -99,8 +99,12 @@ public class SuggestionsUIFeatureTests {
         $("#suggestion-" + thirdSuggestionId + "-user-name").shouldHave(text("newUserName"));
 
         // Test Deleting the first suggestion
-        $("#user-" + firstSuggestionId).should(exist);
+        $("#suggestion-" + firstSuggestionId).should(exist);
         $$("[data-suggestion-display]").shouldHave(size(3));
+
+        // Add the appropriate User name
+        $("#new-suggestion-user-name").sendKeys("secondUser");
+        $("#user-name-submit").click();
 
         $("#delete-suggestion-" + firstSuggestionId).click();
         $("#suggestion-" + firstSuggestionId).shouldNot(exist);
