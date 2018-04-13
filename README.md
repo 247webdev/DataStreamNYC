@@ -34,5 +34,6 @@ Checkout this repo then start the test process with the following:
 
 #### Test the Suggestions-API with...
 ```
+> cd suggestions-api
 > ./gradlew test
 ```
