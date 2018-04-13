@@ -17,7 +17,7 @@ class SuggestionForm extends Component {
     const updatedSuggestion = { ...this.state.suggestion };
     updatedSuggestion[attributeToChange] = newValue;
     updatedSuggestion['userName'] = this.props.userName;
-    
+
     this.setState({ suggestion: updatedSuggestion });
   };
 
@@ -31,7 +31,7 @@ class SuggestionForm extends Component {
     return (
       <div className="forms">
         <form onSubmit={this.handleSubmit} id="new-suggestion-form">
-        <label htmlFor="title">Title:
+          <label htmlFor="title">Title:
             <input
               id="new-suggestion-title"
               type="text"

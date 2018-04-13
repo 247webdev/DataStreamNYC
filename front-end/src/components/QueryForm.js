@@ -14,7 +14,7 @@ class QueryForm extends Component {
 
     let updatedQuery = { ...this.state.query };
     updatedQuery = newValue;
-    
+
     this.setState({ query: updatedQuery });
   };
 

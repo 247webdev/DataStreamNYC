@@ -18,7 +18,7 @@ class NewUserForm extends Component {
 
     const updatedUser = { ...this.state.user };
     updatedUser[attributeToChange] = newValue;
-    
+
     this.setState({ user: updatedUser });
   };
 
@@ -40,7 +40,7 @@ class NewUserForm extends Component {
         <h2>Create User</h2>
         <Link to="/admin">Cancel</Link>
         <form onSubmit={this.handleSubmit} id="new-user-form">
-        <label htmlFor="email">Email:
+          <label htmlFor="email">Email:
             <input
               id="new-user-email"
               type="text"

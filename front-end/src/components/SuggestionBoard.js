@@ -57,7 +57,7 @@ class SuggestionBoard extends Component {
     };
   };
 
-  handleChange = (event) => {    
+  handleChange = (event) => {
     this.setState({ update: event.target.value });
   };
 
