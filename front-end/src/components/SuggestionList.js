@@ -13,6 +13,8 @@ const SuggestionList = (props) => {
             props.suggestions.map((suggestion, index) => {
               return (
                 <Suggestion
+                  userName={props.userName}
+                  deleteSuggestion={props.deleteSuggestion}
                   suggestion={suggestion}
                   key={index}
                   index={index}

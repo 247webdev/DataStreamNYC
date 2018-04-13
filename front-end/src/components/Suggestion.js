@@ -11,8 +11,19 @@ const Suggestion = (props) => {
         <div id={`suggestion-${props.suggestion.id}-content`} className="content">
           {props.suggestion.content}
         </div>
+        <div id={`suggestion-${props.suggestion.id}-user-name`} className="userName">
+          User: {props.suggestion.userName}
+        </div>
       </div>
-      <hr/>
+      <div className="right">
+        {props.userName === props.suggestion.userName ?
+          <button
+            id={`delete-suggestion-${props.suggestion.id}`}
+            onClick={() => { props.deleteSuggestion(props.suggestion.id, props.index) }}>
+            Delete
+        </button> : null}
+      </div>
+      <hr />
     </div>
   );
 }

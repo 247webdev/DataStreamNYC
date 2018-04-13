@@ -78,6 +78,7 @@ class SuggestionBoard extends Component {
         />
         <SuggestionList
           suggestions={this.state.suggestions}
+          userName={this.state.userName}
         />
       </div>
     );
