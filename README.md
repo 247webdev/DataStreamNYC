@@ -18,7 +18,7 @@ Checkout this repo then start the test process with the following:
 
 #### Run ALL tests for both front-end and back-end (Feature, Unit & Integration tests)
 ```
-> ./gradlew allTest
+> ./gradlew allTests
 ```
 
 #### Test the main features with...
