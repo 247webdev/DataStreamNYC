@@ -18,11 +18,11 @@ const HomePage = (props) => {
             </div>
             <h2>The City Record Online</h2>
           </div>
-          <div className="homenav">
-            <Link to="/apidashboard">API Dashboard</Link> |&nbsp;
-            <Link to="/suggestionboard" id="suggestions-link">Suggestion Board</Link> |&nbsp;
-            <Link to="/admin" id="admin-view-link">Admin View</Link>
-          </div>
+          <nav className="navbar navbar-expand-lg navbar-light bg-light homenav">
+            <Link className="nav-link" to="/apidashboard">API Dashboard</Link> |&nbsp;
+            <Link className="nav-link" to="/suggestionboard" id="suggestions-link">Suggestion Board</Link> |&nbsp;
+            <Link className="nav-link" to="/admin" id="admin-view-link">Admin View</Link>
+          </nav>
         </div>
         <h2>Welcome!</h2>
       </div>

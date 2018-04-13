@@ -31,7 +31,7 @@ class QueryForm extends Component {
           <label htmlFor="agency">Agency Name:&nbsp;
             <input type="text" name="agency" onChange={this.handleChange} />
           </label>
-          <button type="submit">Search</button>
+          <button type="submit" className="btn btn-primary">Search</button>
         </form>
       </div>
     );

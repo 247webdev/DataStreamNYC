@@ -6,7 +6,7 @@ import Suggestion from './Suggestion';
 const SuggestionList = (props) => {
   return (
     <div id="suggestions-wrapper">
-      <h1><u>Current Suggestions</u></h1>
+      <h1 className="white"><u>Current Suggestions</u></h1>
       <hr />
       <div className="list-group">
         {

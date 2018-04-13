@@ -40,14 +40,13 @@ class SuggestionForm extends Component {
             />
           </label>
           <label htmlFor="content">Content:
-            <input
+            <textarea
               id="new-suggestion-content"
-              type="text"
               name="content"
               onChange={this.handleChange}
             />
           </label>
-          <button id="new-suggestion-submit" type="submit">Suggest</button>
+          <button id="new-suggestion-submit" type="submit" className="btn btn-primary">Suggest</button>
         </form>
       </div>
     );

@@ -82,7 +82,7 @@ class UpdateUserForm extends Component {
               onChange={this.handleChange}
             />
           </label>
-          <button id="update-user-submit" type="submit">Submit</button>
+          <button id="update-user-submit" type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
     );

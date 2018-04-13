@@ -69,22 +69,27 @@ class SuggestionBoard extends Component {
 
   render() {
     return (
-      <div>
-        <Link to="/">Home</Link> |&nbsp;
-        <Link to="/apidashboard">API Dashboard</Link> |&nbsp;
-        <Link to="/admin" id="admin-view-link">Admin View</Link>
+      <div className="suggestionBoard">
+        <div className="left username">
+          <h4 className="white">Enter UserName</h4>
+          <form onSubmit={this.handleSubmit} id="user-name-form">
+            <label htmlFor="userName">
+              <input
+                id="new-suggestion-user-name"
+                type="text"
+                name="userName"
+                onChange={this.handleChange}
+              />
+              <button id="user-name-submit" type="submit">Submit</button>
+            </label>
+          </form>
+        </div>
 
-        <form onSubmit={this.handleSubmit} id="user-name-form">
-          <label htmlFor="userName">
-            <input
-              id="new-suggestion-user-name"
-              type="text"
-              name="userName"
-              onChange={this.handleChange}
-            />
-            <button id="user-name-submit" type="submit">Submit</button>
-          </label>
-        </form>
+        <div className="right push nav">
+          <Link to="/">Home</Link> |&nbsp;
+          <Link to="/apidashboard">API Dashboard</Link> |&nbsp;
+          <Link to="/admin" id="admin-view-link">Admin View</Link>
+        </div>
 
         <SuggestionForm
           createSuggestion={this.createSuggestion}
